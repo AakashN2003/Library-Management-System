@@ -778,6 +778,7 @@ public class Library{
 								if(member.getNoOfBooksBorrowed() < member.getMaxNoOfBooks()){
 									book.setBookIssuedTo(member);
 									book.setBookIssuedBy(staff);
+									book.setBookReceivedBy(null);
 									member.setNoOfBooksBorrowed(member.getNoOfBooksBorrowed() + 1);
 									staff.setNoOfIssued(staff.getNoOfIssued()+1);
 
@@ -846,7 +847,7 @@ public class Library{
 
 							book.setBookIssuedTo(null);
 							book.setBookIssuedBy(null);
-							book.setBookIssuedBy(staff);
+							book.setBookReceivedBy(staff);
 							member.setNoOfBooksBorrowed(member.getNoOfBooksBorrowed() - 1);
 							staff.setNoOfReceived(staff.getNoOfReceived() + 1);
 
