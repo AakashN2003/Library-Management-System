@@ -1,70 +1,108 @@
-package con.lms.util;
+package conf.lms.util;
 
 import java.util.Scanner;
 
-public class Helper
-{
-	public static int getI(){
-		Scanner sc = new Scanner(System.in);
-		int value = 0;
-		boolean isOk = true;
-		
-		do{
-			try{
-				value = sc.nextInt();	
-				isOk = false;
-			}
-			catch(Exception e){
-				System.out.println("Invalid Integer, Please Enter a Valid Integer ");
-				sc.nextLine();
-			}
-		}while(isOk);
+public class Helper{
+	
 
-		return value;
+
+
+	public static void main(String args[])	{
+
+		
+		Scanner sc = new Scanner(System.in);
+
+	
+	}
+
+
+	public static int getIBetween(int a,int b){
+
+			Scanner sc = new Scanner(System.in);
+			//System.out.println("Enter the two numbers");
+			int value = sc.nextInt();
+			boolean flag = true;
+			int num =0;
+			while(flag){
+				if(value >= a  && value <= b ){
+				 	 num = value;
+				 	flag =false;
+				 	
+				}else{
+					System.out.println("wrong input, try again choose any of the below option between " + a + " to " + b);
+					 num = 0;
+					 break;
+				}
+			}
+			return num;
+			
+		
+
+	
 	}
 	public static String getS(){
-		Scanner sc = new Scanner(System.in);
-		String value = sc.nextLine() ;
-		return value;
-	}
-	
-	public static int getI(int start,int end){
-		Scanner sc = new Scanner(System.in);
-		int value = 0;
-		boolean isOk = true;
 
-		do
-		{
+			Scanner sc = new Scanner(System.in);
+			//System.out.println("Enter the two numbers");
+			String value = sc.nextLine();
+			
+
+			boolean flag = true;
+			String num = null;
+			
 			try{
-
-				value = sc.nextInt();
-				if(value >= start && value <= end){
-					isOk = false;
-				}
-				else{
-					System.out.println("Invalid Data, Please Enter a Number between " + start + " and" + end );
-
-				}
+				while(flag){
 				
+
+					if(value.matches("[a-zA-Z\\s]+")){
+					 	 num =  value;
+					 	flag =false;
+					 	break;
+					 	
+					}
+
+					else{
+						System.out.println("wrong input, numbers and symbols not allowed");
+						 flag = false;
+						 num = null;
+						// break;
+
+					}
+				}
+									
 			}
 			catch(Exception e){
-				System.out.println("Invalid Data, Please Enter a Number between " + start + " and" + end );
+						System.out.println(e);
+						
+					}	
+
+
+			return num;
+			
+		
+
+	
+	}
+
+	public static int getI(){
+		Scanner sc =new Scanner(System.in);
+		int value = 0;
+		boolean isOK = true;
+
+		do{
+			try{
+				value =sc.nextInt();
+				isOK = false;
+			}catch(Exception e){
+				System.out.println("Wrong input, please eneter a valid integer");
+				System.out.println(e.getMessage());
 				sc.nextLine();
 			}
-		}while(isOk);
+
+
+		}while(isOK);
 
 		return value;
-	}
-	
-
-
-	public static void main(String args[])
-	{
-		int s = Helper.getI();
-		int e = Helper.getI();
-		int val = Helper.getI(s,e);
-		System.out.println(val);
 	}
 
 }
-

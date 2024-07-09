@@ -1,28 +1,33 @@
-package con.lms.dto;
+package conf.lms.dto;
 
-public class Book 
-{
+import java.io.Serializable;//markable interface
+
+public class Book implements Serializable{
+
+
 	private int bookId;
 	private String bookName;
-	private String authorName;
-	private boolean status;
-	private Member issuedTo;
-	private String category;
-	private Staff issuedBy;
-	private Staff receivedBy;
+	private String bookAuthor;
+	private String bookCategory;
+	private Member bookIssuedTo;
+	private Staff bookIssuedBy;
+	private Staff bookReceivedBy;
+
+
+
+
+
 
 	public Book(){
 
 	}
-	
-	
-	public Book(int bookId,String bookName,String authorName,String category){
+
+	public Book(int bookId,String bookName,String bookAuthor,String bookCategory){
 		this.bookId = bookId;
 		this.bookName = bookName;
-		this.authorName = authorName;
-		this.category = category;
-		this.status = true;
-
+		this.bookAuthor = bookAuthor;
+		this.bookCategory = bookCategory;
+		
 
 	}
 
@@ -30,79 +35,56 @@ public class Book
 		return bookId;
 	}
 
-	
-
-	public void setBookId(int bookId){
-		this.bookId = bookId;
-	}
-	
-
 	public String getBookName(){
 		return bookName;
 	}
-
-	public void setBookName(String bookName){
-		this.bookName = bookName;
+	public String getBookAuthor(){
+		return bookAuthor;
 	}
-	public String getAuthorName(){
-		return authorName;
+	public String getBookCategory(){
+		return bookCategory;
 	}
-	public void setAuthorName(String authorName){
-		this.authorName = authorName;
+	public Member getBookIssuedTo(){
+		return bookIssuedTo;
 	}
-	public String getCategory(){
-		return category;
+	public void setBookIssuedTo(Member bookIssuedTo ){
+		this.bookIssuedTo = bookIssuedTo;	
 	}
-	public void setCategory(String category){
-		this.category = category;
+ 
+	public Staff getBookIssuedBy(){
+		return bookIssuedBy;
 	}
-	public boolean getStatus(){
-		return status;
+	public void setBookIssuedBy(Staff bookIssuedBy){
+		this.bookIssuedBy = bookIssuedBy;	
 	}
-	public void setStatus(boolean status){
-		this.status = status;
+	public Staff getBookReceivedBy (){
+		return bookReceivedBy;
 	}
-
-	public Member getIssuedTo(){
-	return issuedTo;
-	}
-	public void setIssuedTo(Member issuedTo){
-		this.issuedTo = issuedTo;
-	}
-	public Staff getIssuedBy(){
-	return issuedBy;
-	}
-	public void setIssuedBy(Staff issuedBy){
-		this.issuedBy = issuedBy;
-	}
-	public Staff getReceivedBy(){
-	return receivedBy;
-	}
-	public void setReceivedBy(Staff receivedBy){
-		this.receivedBy = receivedBy;
+	public void setBookReceivedBy(Staff bookReceivedBy){
+		this.bookReceivedBy = bookReceivedBy;	
 	}
 
 
 
 
+	public String toString(){
+		String output = null;
 
-	public  String toString(){
-		String output = "";
-		String issuedTo = (getIssuedTo() != null) ? (getIssuedTo()).getName() : "not issued";
-		String issuedBy = (getIssuedBy() != null) ? (getIssuedBy()).getName() : "not issued";
-		String receivedBy = (getReceivedBy() != null) ? (getReceivedBy()).getName() : " not received";
+		String issuedTo = (getBookIssuedTo() != null ) ? (getBookIssuedTo()).getPersonName() : "Not Issued";
+		String issuedBy = (getBookIssuedBy() != null ) ? (getBookIssuedBy()).getPersonName() : "Not Issued";
+		String receivedBy = (getBookReceivedBy() != null ) ? (getBookReceivedBy()).getPersonName() : "Not Received";
 
-		output += "Book Id : " + getBookId() + "\n";
-		output += "Book Name : " + getBookName() + "\n";
-		output += "Book Author Name : " + getAuthorName() + "\n";
-		output += "Book Category : " + getCategory() + "\n";
-		output += "Book status : " + getStatus() + "\n";
-		output += "Book issuedTo : " + issuedTo + "\n";
-		output += "Book issuedBy : " + issuedBy + "\n";
-		output += "Book receivedBy : " + receivedBy + "\n";
 
+
+		output =   "\n Book Author " + bookAuthor ;
+		output +=  "\n Book Name :- " + bookName ;
+		output +=  "\n Book Id :- " + bookId ;
+		output +=  "\n Book bookCategory :- " + bookCategory ;
+		output +=  "\n Book issued To : " + issuedTo;
+		output +=  "\n Book issued by : " + issuedBy;
+		output +=  "\n Book Received by : " + receivedBy;
+		  
 		return output;
 	}
-
+	
 }
-

@@ -1,46 +1,49 @@
-package con.lms.dto;
-import java.io.Serializable;
-public class Member extends Person{
+package conf.lms.dto;// data transaction object- package name 
+
+import java.io.Serializable;//markable interface
+
+public class Member extends Person  implements Serializable{
+	
 	private int maxNoOfBooks;
 	private int noOfBooksBorrowed;
 
-	public Member(){
 
-	}
 
-	public Member(int id,String name,String email,String mobileNo,int maxNoOfBooks){
-		super(id,name,email,mobileNo);
+	public Member(int memberId,String memberName,String memberEmail ,String memberMobile,int maxNoOfBooks){
+		super(memberId,memberName,memberEmail,memberMobile);// super must be very first statement and
+		// super's order-invoke base class confstructor
 		this.maxNoOfBooks = maxNoOfBooks;
+		//nooFBooks initialized to zero by default
+		//this.personId = memberId
+		
 	}
 
-	public Member(int maxNoOfBooks,int noOfBooksBorrowed){
-		this.maxNoOfBooks = maxNoOfBooks;
-	}
 
+	
 	public int getMaxNoOfBooks(){
 		return maxNoOfBooks;
 	}
-	public void setMaxNoOfBooks(int maxNoOfBooks){
-		this.maxNoOfBooks = maxNoOfBooks;
-	}
-
 	public int getNoOfBooksBorrowed(){
 		return noOfBooksBorrowed;
+	}
+
+
+
+	public void setMaxNooFBooks(int maxNoOfBooks){
+		 this.maxNoOfBooks =maxNoOfBooks;
 	}
 	public void setNoOfBooksBorrowed(int noOfBooksBorrowed){
 		this.noOfBooksBorrowed = noOfBooksBorrowed;
 	}
 
-	public  String toString(){
-		String output = "";
-		output += "Member Id : " + getId() + "\n";
-		output += "Member Name : " + getName() + "\n";
-		output += "Member Mobile No : " + getMobileNo() + "\n";
-		output += "Member Email : " + getEmail() + "\n";
-		output += "Member Max No Of Books : " + getMaxNoOfBooks() + "\n";
-		output += "Member No Of Books Borrowed : " + getNoOfBooksBorrowed() + "\n";
-				
-
-		return output;
+	public String toString(){
+		String outPut = null;
+		outPut = "\n Member Id " + getPersonId()  + "\n Member Name :- " + getPersonName() + "\n Member email :- " + getPersonEmail() + "\n Member mobile :- " + getPersonMobile() + "\n Member maxNoOfBooks : " + getMaxNoOfBooks();
+		return outPut;
 	}
+
+
+
+	
+
 }

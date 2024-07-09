@@ -1,78 +1,38 @@
-package con.lms.dto;
-import java.io.Serializable;
+
+/* Person Data Transactional Object */
+
+/* I have added some change in Person class */
+package conf.lms.dto;
+
+import java.io.Serializable;//markable interface
+
+
 public class Person implements Serializable{
- 	private int id;
-	private String name;
-	private String mobileNo;
-	private String email;
-	private boolean status;
-
-	public Person(){
-
-	}
-
-	public Person(int id,String name,String mobileNo,String email){
-		this.id = id;
-		this.name = name;
-		this.mobileNo = mobileNo;
-		this.email = email;
-
-	}
-
-	public int getId(){
-		return id;
-	}
-	public void setId(int id){
-		this.id = id;
-	}
 	
+	private int personId;
+	private String personName;
+	private String  personMobile;
+	private String personEmail;
 
-	public String getName(){
-		return name;
+	public Person(int personId,String personName,String personEmail,String  personMobile){
+		this.personId =personId;
+		this.personName = personName;
+		this.personEmail = personEmail;
+		this.personMobile = personMobile;
+		
 	}
 
-	public void setName(String name){
-		this.name = name;
+	public int getPersonId(){
+		return personId;
+	}
+	public String getPersonName(){
+		return personName;
+	}
+	public String getPersonMobile(){
+		return  personMobile;
+	}
+	public String getPersonEmail(){
+		return personEmail;
 	}
 
-	public String getMobileNo(){
-		return mobileNo;
-	}
-	public void setMobileNo(String mobileNo){
-		this.mobileNo = mobileNo;
-	}
-
-	public String getEmail(){
-		return email;
-	}
-	public void setEmail(String email){
-		this.email = email;
-	}
-
-
-
-
-
-
-
-	public  String toString(){
-		String output = "";
-		output += "Person Id : " + getId() + "\n";
-		output += "Person Name : " + getName() + "\n";
-		output += "Person Mobile No : " + getMobileNo() + "\n";
-		output += "Person Email : " + getEmail() + "\n";		
-
-		return output;
-	}
- }
-
-
-
-
-
-
-
-
-
-
- 
+}

@@ -1,78 +1,40 @@
-package con.lms.app;
+package conf.lms.app;
 
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import con.lms.dto.Book;
-import con.lms.util.Helper;
-import con.lms.dto.Member;
-import con.lms.dto.Staff;
-import con.lms.util.FileHelper;
+import conf.lms.dto.Book;
+import conf.lms.util.Helper;
+import conf.lms.dto.Member;
+import conf.lms.dto.Staff;
+import conf.lms.util.FileHelper;
+import conf.lms.data.DataFactory;
 
 
 public class Library{
-	public static Book books[];
-	public static Member members[];
-	public static Staff staffs[];
 
-	public static Book bookData[] = 
-				  { new Book(1,"java","James","Programming"),
-					new Book(2,"html","Tim","Programming"),
-					new Book(3,"css","Hakon","Programming"),
-					new Book(4,"javascript","Brendan","Programming"),
-					new Book(5,"Spring","Rod","Programming"),
-					new Book(6,"Thinking, Fast and Slow","Kahneman","STEM"),
-					new Book(105,"react","Jordan","Programming"),
-					new Book(106,"A Brief History of Time","Stephen ","STEM"),
-					new Book(107,"Sapiens","Yuval ","STEM"),
-					new Book(108,"Why We Sleep","Matthew ","STEM"),
-					new Book(109,"java Applications","James","Programming"),
-					new Book(110,"weaving the web ","Tim","Programming"),
-					new Book(111,"Black hole","Stephen ","STEM"),
-
-					};
-
-	public static Member memberData[] =
-							{ 	new Member(1001,"Hans","hans@hans.org","9100000011",5),
-							   	new Member (1002,"Feynman","feynman@feynman.org","9100000012",5),
-								new Member (1003,"Teller","teller@teller.org" ,"9100000013",5),
-								new Member (1004,"Ernest","Ernest@Ernest.org" ,"9100000014",5),
-								new Member (1005,"john","john@john.org" ,"9100000015",5),
-								new Member (1006,"niels","niels@niels.org","9100000016",5),
-								new Member (1007,"Szilard","Szilard@Szilard.org" ,"9100000017",5),
-								new Member (1008,"Oppie","oppie@oppie.org" ,"9100000018",5),
-								new Member (1009,"Otto","otto@otto.org" ,"9100000019",5)
-
-								};
-
-	public static Staff staffData[] = 
-							{			new Staff (1,"Raj","raj@library.org","8000000011"),
-										new Staff (2,"Kumar","kumar@library.org","8000000012"),
-										new Staff (3,"bob","bob@library.org","8000000013"),
-										new Staff (4,"Tom","tom@library.org","8000000014"),
-										new Staff (5,"Hal","hal@library.org","8000000015")
-
-							};
-
-	static {
+	public static Book books [];
+	public static Member members [];
+	public static Staff staffs [];
+	
+		static {
 
 					try{
 
-						libraryData = FileHelper.readData();
-						if(libraryData == null){
-								libraryData = new Hashtable<String,Object>();
-								libraryData.put("book", bookData);
-								libraryData.put("member", memberData);
-								libraryData.put("staff", staffData);
+						DataFactory.libraryData = FileHelper.readData();
+						if(DataFactory.libraryData == null){
+								DataFactory.libraryData = new Hashtable<String,Object>();
+								DataFactory.libraryData.put("book", DataFactory.bookData);
+								DataFactory.libraryData.put("member", DataFactory.memberData);
+								DataFactory.libraryData.put("staff", DataFactory.staffData);
 
-								FileHelper.writeData(libraryData);
+								FileHelper.writeData(DataFactory.libraryData);
 						}
 
-						if(libraryData != null){
-							books = (Book []) libraryData.get("book");
-							members = (Member []) libraryData.get("member");
-							staffs = (Staff []) libraryData.get("staff");
+						if(DataFactory.libraryData != null){
+							books = (Book []) DataFactory.libraryData.get("book");
+							members = (Member []) DataFactory.libraryData.get("member");
+							staffs = (Staff []) DataFactory.libraryData.get("staff");
 
 						}
 
@@ -80,9 +42,357 @@ public class Library{
 						System.out.println("error : Library : static block : " + e);	
 					}
 					
-				}	
+				}
 
 
+			public void finalize(){
+
+
+				Hashtable libraryClosingData = new Hashtable<String,Object>();
+
+				try{
+
+
+								libraryClosingData.put("book", books);
+								libraryClosingData.put("member", members);
+								libraryClosingData.put("staff", staffs);
+
+								FileHelper.writeData(libraryClosingData);
+
+								System.out.println("Library data updated successfully. Have a nice day ...");
+
+
+
+				}catch(Exception e){
+
+				}
+
+			}
+
+
+
+
+		public static void main(String args[]){
+			int option,bookId,memberId,staffId;
+
+			while(true){
+					System.out.println("\n");
+					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					System.out.println("1. Book : ");
+					System.out.println("2. Member : ");
+					System.out.println("3. Staff : ");
+					System.out.println("4. exit Menu");
+					//System.out.println("");
+					System.out.println("Choose from option 1 to 4");
+
+					 option = Helper.getIBetween(1,4);
+
+
+						switch(option) {
+
+
+							case 1 :
+
+								int options;
+								do{
+											System.out.println("\n");
+											System.out.println("1.  Display All Book details");
+											System.out.println("2.  Search Book by Book Name");
+											System.out.println("3.  Search Book by Author");
+											System.out.println("4.  Search Book by Category");
+											System.out.println("5.  List Books borrowed by Member");
+											System.out.println("6.  List Book issued by Staff name");
+											System.out.println("7.  Issue Book ");
+											System.out.println("8.  Return Book ");
+											System.out.println("9. exit Menu");
+
+											 options = Helper.getIBetween(1,9);
+											switch(options){
+								 			
+										 			case 1 :
+
+										 				System.out.println("		BOOK DETAILS 		");
+														System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+														Book books[] = (Book[])Library.getAllDetails("book");
+														for(Book book: books){
+															System.out.println(book);
+														}
+
+
+
+										 				break;
+										 			case 2 :
+
+										 				
+
+										 				System.out.println("Enter the book name you wish to search : - ");
+										 				String bookName1 = Helper.getS();
+										 				Book checkBookName = Library.getBookDetails(bookName1);
+
+														if(checkBookName == null){
+															System.out.println("book not available");
+
+														}else {
+															System.out.println(checkBookName);
+														}
+
+										 				break;
+
+
+										 			case 3 :
+
+
+
+														
+
+										 				System.out.println("Enter the Author name you wish to search : - ");
+										 				String authorName = Helper.getS();
+										 				
+
+														System.out.println("Book details : ");
+														ArrayList<Book> checkAuthorName = Library.searchBook(authorName,"author");
+
+															if(checkAuthorName.size() > 0 ){
+																for (Book book : checkAuthorName){
+																	System.out.println(book);
+																}
+															}else{
+																System.out.println("No books available with this Author name ");
+															}
+
+										 				break;
+
+										 			case 4 :
+
+
+
+										 				System.out.println("Enter the Category name you wish to search : - ");
+										 				String bookCategory = Helper.getS();
+										 				
+
+														System.out.println("Book details : ");
+														ArrayList<Book> checkBookCategory = Library.searchBook(bookCategory,"category");
+
+															if(checkBookCategory.size() > 0 ){
+																for (Book book : checkBookCategory){
+																	System.out.println(book);
+																}
+															}else{
+																System.out.println("No books available with this Category name ");
+															}
+
+										 				break;
+
+
+										 			case 5 :
+
+
+
+										 				System.out.println("Enter the member name you wish to search : - ");
+										 				String bookMember = Helper.getS();
+										 				
+
+														
+														ArrayList<Book> checkBookMember = Library.searchBook(bookMember,"member");
+
+															if(checkBookMember.size() > 0 ){
+																for (Book book : checkBookMember){
+																	System.out.println(book);
+																}
+															}else{
+																System.out.println("No books borrowed by this member  ");
+															}
+
+										 				break;
+
+										 			case 6 :
+
+
+
+										 				System.out.println("Enter the staff name you wish to search : - ");
+										 				String staffName = Helper.getS();
+										 				
+
+														
+														ArrayList<Book> checkBookStaff = Library.searchBook(staffName,"staff");
+
+															if(checkBookStaff.size() > 0 ){
+																for (Book book : checkBookStaff){
+																	System.out.println(book);
+																}
+															}else{
+																System.out.println("No books Issued by this staff id  ");
+															}
+
+										 				break;
+
+
+										 			case 7 :
+										 				System.out.println("Issue Book");
+										 				System.out.println("enter the book id , member id, Staffid");
+										 				 bookId = Helper.getI();
+										 				 memberId = Helper.getI();
+										 				 staffId = Helper.getI();
+														
+														String issuedBook = Library.issueBook(bookId,memberId,staffId);
+														System.out.println(issuedBook);
+										 				break;
+
+										 			case 8 :
+
+										 				System.out.println("Return Book");
+										 				System.out.println("enter the book id , member id, Staffid for issuing book");
+										 				 bookId = Helper.getI();
+										 				 memberId = Helper.getI();
+										 				 staffId = Helper.getI();
+														
+														String returnedBook = Library.returnBook(bookId,memberId,staffId);
+														System.out.println(returnedBook);
+										 				break;
+
+
+
+								 				
+										
+											}
+
+
+								}while(options != 9);
+								 
+								
+								break;
+
+
+							case 2 :
+
+									do{
+								
+											System.out.println("1. List all Member ");
+											System.out.println("2. Search member by name/email/mobile ");
+											System.out.println("3. exit Menu");
+
+											 options = Helper.getIBetween(1,3);
+											switch(options){
+								 			
+								 			case 1 :
+
+
+									 				System.out.println("		Member DETAILS 		");
+													System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+													Member members[] = (Member[])Library.getAllDetails("member");
+													for(Member member: members){
+														System.out.println(member);
+
+														System.out.println("\n");
+													}
+
+								 				break;
+
+								 			case 2 :
+
+
+													System.out.println("Enter the member details you wish to search : - ");
+									 				String memberData = Helper.getS();
+									 				
+
+													
+													ArrayList<Book> memberList = Library.searchBook(memberData,"member");
+
+														if(memberList.size() > 0 ){
+															for (Book book : memberList){
+																System.out.println(book);
+															}
+														}else{
+															System.out.println("No book Issued to this member  ");
+														}
+
+							 					break;
+
+										
+											}
+									}while(options !=3);
+								break;
+
+								
+
+							case 3 :
+
+								do{
+											System.out.println("1.  List all Staff : ");
+											System.out.println("2.  Search Staff by name/email/mobile");
+											
+											System.out.println("3.  Payslip : ");
+											System.out.println("4. exit Menu");
+
+											 options = Helper.getIBetween(1,4);
+
+											 switch(options){
+											
+												 case 1 :  
+
+									 				System.out.println("		STAFF DETAILS 		");
+													System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+
+													Staff staffs[] = (Staff[])Library.getAllDetails("staff");
+													for(Staff staff: staffs){
+														System.out.println(staff);
+													}
+
+													System.out.println("\n");
+
+
+
+									 				break;
+												
+												 case 2 :
+
+														System.out.println("Enter the staff details you wish to search : - ");
+										 				String staffData = Helper.getS();
+										 				
+
+														
+														ArrayList<Book> checkStaffData = Library.searchBook(staffData,"staff");
+
+															if(checkStaffData.size() > 0 ){
+																for (Book book : checkStaffData){
+																	System.out.println(book);
+																}
+															}else{
+																System.out.println("No book Issued by this staff id  ");
+															}
+
+								 					break;
+								 				}
+									 				
+											
+									}while(options != 4);
+									
+								break;
+
+
+							case 4 :
+								closeLibrary();
+								System.exit(0);
+							break;
+
+						}
+
+					
+
+			}
+
+					
+		}
+
+
+					
+			
+				
 
 
 	public static Book getBookDetails(int bookId){
@@ -112,7 +422,7 @@ public class Library{
 
 		try{
 			for(Member member : members){	 
-				if(memberId == (member.getId())){
+				if(memberId == (member.getPersonId())){
 						memberObj = member;
 						break;
 				}
@@ -134,7 +444,7 @@ public class Library{
 
 		try{
 			for(Staff staff : staffs){	 
-				if(staffId == (staff.getId())){
+				if(staffId == (staff.getPersonId())){
 						staffObj = staff;
 						break;
 				}
@@ -178,19 +488,19 @@ public class Library{
 		try{
 				for(Member member : members){
 					if(inputType.equals("memberName")){
-						if(value.equalsIgnoreCase(member.getName())){
+						if(value.equalsIgnoreCase(member.getPersonName())){
 							searchedMember = member;
 						}
 						break;
 					}else if(inputType.equals("memberEmail")){
-							if(value.equalsIgnoreCase(member.getEmail())){
+							if(value.equalsIgnoreCase(member.getPersonEmail())){
 								searchedMember = member;
 								break;
 							}
 						}
 						else if(inputType.equals("mobileNumber")){
 
-								if(value.equalsIgnoreCase(member.getMobileNo())){
+								if(value.equalsIgnoreCase(member.getPersonMobile())){
 									searchedMember = member;
 									break;
 								}
@@ -214,18 +524,18 @@ public class Library{
 		try{
 				for(Staff staff : staffs){
 					if(inputType.equals("staffName")){
-						if(value.equalsIgnoreCase(staff.getName())){
+						if(value.equalsIgnoreCase(staff.getPersonName())){
 							searchedStaff = staff;
 						}
 						break;
 					}else if(inputType.equals("staffEmail")){
-							if(value.equalsIgnoreCase(staff.getEmail())){
+							if(value.equalsIgnoreCase(staff.getPersonEmail())){
 								searchedStaff = staff;
 								break;
 							}
 						}
 						else if(inputType.equals("staffMobileNumber")){
-								if(value.equalsIgnoreCase(staff.getMobileNo())){
+								if(value.equalsIgnoreCase(staff.getPersonMobile())){
 									searchedStaff = staff;
 									break;
 								}
@@ -252,8 +562,8 @@ public class Library{
 
 			for(Book book : books){
 
-				if(book.getIssuedTo() != null){
-					if((book.getIssuedTo()).getEmail().equalsIgnoreCase(memberEmail)){
+				if(book.getBookIssuedTo() != null){
+					if((book.getBookIssuedTo()).getPersonEmail().equalsIgnoreCase(memberEmail)){
 						searchedBooks[i] = book;
 						i++;
 					}
@@ -276,14 +586,14 @@ public class Library{
 
 			for(Book book : books){
 				if(inputType.equalsIgnoreCase("memberEmail")){
-						if(book.getIssuedTo() != null){
-							if((book.getIssuedTo()).getEmail().equalsIgnoreCase(value)){
+						if(book.getBookIssuedTo() != null){
+							if((book.getBookIssuedTo()).getPersonEmail().equalsIgnoreCase(value)){
 								bookList.add(book);
 							}
 						}
 				}else if(inputType.equalsIgnoreCase("memberMobile")){
-						if (book.getIssuedTo() != null){
-							if((book.getIssuedTo()).getMobileNo().equalsIgnoreCase(value)){
+						if (book.getBookIssuedTo() != null){
+							if((book.getBookIssuedTo()).getPersonMobile().equalsIgnoreCase(value)){
 								bookList.add(book);
 							}
 						}
@@ -307,14 +617,14 @@ public class Library{
 
 			for(Book book : books){
 				if(inputType.equals("staffEmail")){
-						if(book.getIssuedBy() != null){
-							if((book.getIssuedBy()).getEmail().equalsIgnoreCase(value)){
+						if(book.getBookIssuedBy() != null){
+							if((book.getBookIssuedBy()).getPersonEmail().equalsIgnoreCase(value)){
 								bookList.add(book);
 							}
 						}
 				}else if(inputType.equalsIgnoreCase("staffMobile")){
-						if (book.getIssuedBy() != null){
-							if((book.getIssuedBy()).getMobileNo().equalsIgnoreCase(value)){
+						if (book.getBookIssuedBy() != null){
+							if((book.getBookIssuedBy()).getPersonMobile().equalsIgnoreCase(value)){
 								bookList.add(book);
 							}
 						}
@@ -338,7 +648,7 @@ public class Library{
 		try{
 
 			for(Book book : books){
-				if(value.equalsIgnoreCase(book.getCategory())){
+				if(value.equalsIgnoreCase(book.getBookCategory())){
 					bookList.add(book);
 				}
 				
@@ -362,15 +672,9 @@ public class Library{
 				for(Book book : books){
 
 					switch(inputType){
-						case "bookName" :
-
-								if(inputValue.equalsIgnoreCase(book.getBookName())){
-									 bookList.add(book);
-								}
-							break;
 						case "category" :
 
-								if(inputValue.equalsIgnoreCase(book.getCategory())){
+								if(inputValue.equalsIgnoreCase(book.getBookCategory())){
 									 bookList.add(book);
 								}
 							break;
@@ -379,28 +683,28 @@ public class Library{
 
 								//System.out.println("member " + inputValue + " " + inputType);
 
-								if (book.getIssuedTo() != null){
-							       if((inputValue.equalsIgnoreCase((book.getIssuedTo()).getEmail())) ||
-							       	  (inputValue.equalsIgnoreCase((book.getIssuedTo()).getMobileNo())) ||
-							       	  (inputValue.equalsIgnoreCase((book.getIssuedTo()).getName()))){
+								if (book.getBookIssuedTo() != null){
+							       if((inputValue.equalsIgnoreCase((book.getBookIssuedTo()).getPersonEmail())) ||
+							       	  (inputValue.equalsIgnoreCase((book.getBookIssuedTo()).getPersonMobile())) ||
+							       	  (inputValue.equalsIgnoreCase((book.getBookIssuedTo()).getPersonName()))){
 							       			bookList.add(book);
 							       }
 								}
 							break;
 
 						case "author" :
-								if(inputValue.equalsIgnoreCase(book.getAuthorName())) {
+								if(inputValue.equalsIgnoreCase(book.getBookAuthor())) {
 									bookList.add(book);
 								}
 							break;
 
 						case "staff" :
 
-								if (book.getIssuedBy() != null){
+								if (book.getBookIssuedBy() != null){
 
-							       if((inputValue.equalsIgnoreCase((book.getIssuedBy()).getEmail())) ||
-							       	  (inputValue.equalsIgnoreCase((book.getIssuedBy()).getMobileNo())) || 
-							       	  (inputValue.equalsIgnoreCase((book.getIssuedBy()).getName())) ){
+							       if((inputValue.equalsIgnoreCase((book.getBookIssuedBy()).getPersonEmail())) ||
+							       	  (inputValue.equalsIgnoreCase((book.getBookIssuedBy()).getPersonMobile())) || 
+							       	  (inputValue.equalsIgnoreCase((book.getBookIssuedBy()).getPersonName())) ){
 							       		bookList.add(book);
 							       }
 								}
@@ -417,30 +721,6 @@ public class Library{
 
 			return bookList;
 	}
-
-	public static ArrayList<Member> searchMember(String keyword) {
-        ArrayList<Member> result = new ArrayList<>();
-        for (Member member : members) {
-            if (member.getName().equalsIgnoreCase(keyword) ||
-                member.getEmail().equalsIgnoreCase(keyword) ||
-                member.getMobileNo().equalsIgnoreCase(keyword)) {
-                result.add(member);
-            }
-        }
-        return result;
-    }
-
-    public static ArrayList<Staff> searchStaff(String keyword) {
-        ArrayList<Staff> result = new ArrayList<>();
-        for (Staff staff : staffs) {
-            if (staff.getName().equalsIgnoreCase(keyword) ||
-                staff.getEmail().equalsIgnoreCase(keyword) ||
-                staff.getMobileNo().equalsIgnoreCase(keyword)) {
-                result.add(staff);
-            }
-        }
-        return result;
-    }
 
 
 	public static Object[] getAllDetails(String inputType){
@@ -486,44 +766,49 @@ public class Library{
 
 			if(book != null){
 
-				if(book.getIssuedTo() == null){
+				if(book.getBookIssuedTo() == null){
 
 					if(member != null){
+
+						
+
 						if(staff != null){
 
 								if(member.getNoOfBooksBorrowed() < member.getMaxNoOfBooks()){
-									book.setIssuedTo(member);
-									book.setIssuedBy(staff);
+									book.setBookIssuedTo(member);
+									book.setBookIssuedBy(staff);
 									member.setNoOfBooksBorrowed(member.getNoOfBooksBorrowed() + 1);
 									staff.setNoOfIssued(staff.getNoOfIssued()+1);
 
-									message = "Book :" + book.getBookName()+ " is successfully issued to " + memberId;
+									message = "Book :" + book.getBookName()+ " is successfully issued to "  +  member.getPersonName();
 
 								}else{
-									message = "Maximum of books can be borrowed exceed for this member : " + memberId;
+									message = "Maximum of books can be borrowed exceed for this member : " + memberId + " " + member.getPersonName();
 								}
 							
 
 						}else{
 
-							message = "No Staff available with this staffId : " +  staffId;
+							message = "No Staff available with this staffId : " + staffId + " " +  staff.getPersonName();
 
 						}
 
 
 
 					}else{
-						message = "No members available with this memberId : " + memberId;
+						message = "No members available with this memberId : " + memberId + " " + member.getPersonName();
 					}
 				}else{
-					message = "Book : " + book.getBookName()  + " is already issued to " +  member.getName();
+					message = "Book : " + bookId + " "+ book.getBookName()  + " is already issued to " + memberId + " "+  member.getPersonName();
 				}
 
 
 
 			}else{
-				message = "No books available with this bookId : " + bookId;
+				message = "No books available with this bookId : "+ bookId + " " + book.getBookName();
 			}
+
+			
 
 
 
@@ -531,53 +816,59 @@ public class Library{
 		}catch(Exception e){
 			System.out.println("Library : getAllDetails: " + e);
 		}
+
 		return message;
 
 	}
-	public static String returnBook(int bookId,int memberId,int staffId){
-		Book book = null;
-		Staff staff = null;
-		Member member = null;
 
-		String message = "";
+
+	public static String returnBook (int bookId,int memberId, int staffId){
+		Book book = null;
+		Member member = null;
+		Staff staff = null;
+		String message = " ";
+
+
+		book = getBookDetails(bookId);
+		member = getMemberDetails(memberId);
+		staff = getStaffDetails(staffId);
 
 		try{
-			book = getBookDetails(bookId);
-			staff = getStaffDetails(staffId);
-			member =getMemberDetails(memberId);
 
 			if(book != null){
-				if(book.getIssuedTo() != null){
-					if(member != null ){
+				
+				if(book.getBookIssuedTo() != null){
+					
+
+					if(member != null){
 						if(staff != null){
-							if(book.getIssuedTo().getId() == memberId){
-								book.setIssuedTo(null);
-								book.setIssuedBy(null);
-								book.setReceivedBy(staff);
-								member.setNoOfBooksBorrowed(member.getMaxNoOfBooks() - 1);
-								staff.setNoOfIssued(staff.getNoOfIssued() - 1);
-								staff.setNoOfReceived(staff.getNoOfReceived() + 1);
 
-								message = "Book" + book.getBookName() + " is successfully returned By" + member.getName() ;
-							}else{
-								message = "This book not issued to " + memberId;
-							}
-						}else{
-							message = " No staff with" + staffId;
+							book.setBookIssuedTo(null);
+							book.setBookIssuedBy(null);
+							book.setBookIssuedBy(staff);
+							member.setNoOfBooksBorrowed(member.getNoOfBooksBorrowed() - 1);
+							staff.setNoOfReceived(staff.getNoOfReceived() + 1);
+
+							message = ("The Book : " + book.getBookName() + " is returned by : " + member.getPersonName());
+
+						}else {
+							message = ("There is no Staff in records with this staff id " + staff.getPersonName());
 						}
-					}else{
-						message = " No Member with " + memberId ;
-					}
 
+					}else {
+						message = ("There is no member in records with this member id " + member.getPersonName());
+					}
+				
 				}else{
-					message = "Book : " + book.getBookName()  + " is not issued to any member";
+					message = ("The book with book id " + book.getBookName() + " is not issued");
 				}
+
 			}else{
-				message = "No books available with this bookId : " + bookId;Q
+				message = ("The book is not in the records");
 			}
 
 		}catch(Exception e){
-			System.out.println("Library : getAllDetails: " + e);
+			message = (" Library : returnBook : " + e);
 		}
 
 		return message;
@@ -585,15 +876,30 @@ public class Library{
 	}
 
 
-}	
+	public static void closeLibrary(){
+
+
+				Hashtable libraryClosingData = new Hashtable<String,Object>();
+
+				try{
+
+
+								libraryClosingData.put("book", books);
+								libraryClosingData.put("member", members);
+								libraryClosingData.put("staff", staffs);
+
+								FileHelper.writeData(libraryClosingData);
+
+								System.out.println("Library data updated successfully. Have a nice day ...");
 
 
 
+				}catch(Exception e){
+					System.out.println("Library : closeLibrary: " + e);
+				}
 
+			}
 
-
-SS
-
-
+}					
 
 	
