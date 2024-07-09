@@ -104,7 +104,7 @@ public class Library{
 											System.out.println("6.  List Book issued by Staff name");
 											System.out.println("7.  Issue Book ");
 											System.out.println("8.  Return Book ");
-											System.out.println("9. exit Menu");
+											System.out.println("9.  Return to Main Menu");
 
 											 options = Helper.getIBetween(1,9);
 											switch(options){
@@ -251,7 +251,8 @@ public class Library{
 														String returnedBook = Library.returnBook(bookId,memberId,staffId);
 														System.out.println(returnedBook);
 										 				break;
-
+										 			
+										 					
 
 
 								 				
@@ -271,7 +272,7 @@ public class Library{
 								
 											System.out.println("1. List all Member ");
 											System.out.println("2. Search member by name/email/mobile ");
-											System.out.println("3. exit Menu");
+											System.out.println("3. Return to Main Menu");
 
 											 options = Helper.getIBetween(1,3);
 											switch(options){
@@ -326,7 +327,7 @@ public class Library{
 											System.out.println("2.  Search Staff by name/email/mobile");
 											
 											System.out.println("3.  Payslip : ");
-											System.out.println("4. exit Menu");
+											System.out.println("4. Return to Main Menu");
 
 											 options = Helper.getIBetween(1,4);
 

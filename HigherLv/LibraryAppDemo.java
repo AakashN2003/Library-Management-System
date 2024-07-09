@@ -10,7 +10,7 @@ import conf.lms.util.Helper;
 public class LibraryAppliation{
 
      static Book book[] = {
-        new Book(101,"java","James ","Programming","bookIssuedTo","bookIssuedBy","bookReceivedBy")
+        new Book(101,"java","James ","Programming","bookIssuedTo","bookIssuedBy","bookReceivedBy"),
         new Book(102,"html","Tim","Programming","available"," not issued by anyone","not issued till now"),
         new Book(103,"css","Hakon","Programming","available"," not issued by anyone","not issued till now"),
         new Book(104,"javascript","Brendan","Programming","available"," not issued by anyone","not issued till now"),
