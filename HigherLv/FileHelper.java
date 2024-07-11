@@ -8,13 +8,19 @@ import java.util.*;
 public class FileHelper{
 
 	private static String dataFile;
+	private static String transactionDataFile;
 
 	static{
 		dataFile = "library.data";
+		transactionDataFile = "transaction.txt";
 	}
 
 	public static void setDataFileName(String file){
 		dataFile = file;
+	}
+
+	public static void setTransactionDataFile(String file){
+		transactionDataFile = file;
 	}
 
 
@@ -64,4 +70,23 @@ public class FileHelper{
 
 		return result;
 	}
+
+
+	public static void updateTransaction(String transactionData) {  
+        try {  
+            // Create a BufferedWriter object with FileWriter to append to the file  
+            BufferedWriter writer = new BufferedWriter(new FileWriter(transactionDataFile, true));  
+              
+            // Write the string to the file and add a new line character  
+            writer.write(transactionData);  
+            writer.newLine();  
+              
+            // Close the writer  
+            writer.close();  
+        }  
+        catch (IOException e) {  
+            // Catch any exceptions that occur and print the error message  
+            System.out.println("Exception occurred: " + e);  
+        }  
+    }
 }

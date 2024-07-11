@@ -1,6 +1,8 @@
 package conf.lms.util;
 
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;   
 
 public class Helper{
 	
@@ -103,6 +105,15 @@ public class Helper{
 		}while(isOK);
 
 		return value;
+	}
+
+
+	public static String getCurretDateAndTime(){
+		   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now();  
+		   String currentDateTime = (dtf.format(now)).toString();
+		   return  currentDateTime;
+     
 	}
 
 }

@@ -9,6 +9,8 @@ import conf.lms.dto.Member;
 import conf.lms.dto.Staff;
 import conf.lms.util.FileHelper;
 import conf.lms.data.DataFactory;
+import conf.lms.log.FileLogger;
+import conf.lms.log.Logger;
 
 
 public class Library{
@@ -45,33 +47,6 @@ public class Library{
 				}
 
 
-			public void finalize(){
-
-
-				Hashtable libraryClosingData = new Hashtable<String,Object>();
-
-				try{
-
-
-								libraryClosingData.put("book", books);
-								libraryClosingData.put("member", members);
-								libraryClosingData.put("staff", staffs);
-
-								FileHelper.writeData(libraryClosingData);
-
-								System.out.println("Library data updated successfully. Have a nice day ...");
-
-
-
-				}catch(Exception e){
-
-				}
-
-			}
-
-
-
-
 		public static void main(String args[]){
 			int option,bookId,memberId,staffId;
 
@@ -104,7 +79,7 @@ public class Library{
 											System.out.println("6.  List Book issued by Staff name");
 											System.out.println("7.  Issue Book ");
 											System.out.println("8.  Return Book ");
-											System.out.println("9.  Return to Main Menu");
+											System.out.println("9. exit Menu");
 
 											 options = Helper.getIBetween(1,9);
 											switch(options){
@@ -238,6 +213,10 @@ public class Library{
 														
 														String issuedBook = Library.issueBook(bookId,memberId,staffId);
 														System.out.println(issuedBook);
+
+
+														logTransaction(new FileLogger(), issuedBook);
+
 										 				break;
 
 										 			case 8 :
@@ -250,9 +229,10 @@ public class Library{
 														
 														String returnedBook = Library.returnBook(bookId,memberId,staffId);
 														System.out.println(returnedBook);
+														logTransaction(new FileLogger(), returnedBook);
+
 										 				break;
-										 			
-										 					
+
 
 
 								 				
@@ -272,7 +252,7 @@ public class Library{
 								
 											System.out.println("1. List all Member ");
 											System.out.println("2. Search member by name/email/mobile ");
-											System.out.println("3. Return to Main Menu");
+											System.out.println("3. exit Menu");
 
 											 options = Helper.getIBetween(1,3);
 											switch(options){
@@ -327,7 +307,7 @@ public class Library{
 											System.out.println("2.  Search Staff by name/email/mobile");
 											
 											System.out.println("3.  Payslip : ");
-											System.out.println("4. Return to Main Menu");
+											System.out.println("4. exit Menu");
 
 											 options = Helper.getIBetween(1,4);
 
@@ -779,6 +759,7 @@ public class Library{
 									book.setBookIssuedTo(member);
 									book.setBookIssuedBy(staff);
 									book.setBookReceivedBy(null);
+									
 									member.setNoOfBooksBorrowed(member.getNoOfBooksBorrowed() + 1);
 									staff.setNoOfIssued(staff.getNoOfIssued()+1);
 
@@ -814,10 +795,11 @@ public class Library{
 
 
 
-
 		}catch(Exception e){
 			System.out.println("Library : getAllDetails: " + e);
 		}
+
+
 
 		return message;
 
@@ -901,6 +883,22 @@ public class Library{
 				}
 
 			}
+
+	public static int logTransaction(Logger logger, String transactionData){
+
+				int result = 0;
+				
+				try{
+
+					result = logger.logData(transactionData);
+
+				}catch(Exception e){
+					System.out.println("Library : logTransaction: " + e);
+				}
+
+		return result;
+
+	}
 
 }					
 
