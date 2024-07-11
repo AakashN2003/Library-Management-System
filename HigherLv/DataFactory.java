@@ -28,8 +28,8 @@ public class DataFactory{
 					};
 
 	public static Member memberData[] =
-							{ 	new Member(1001,"Hans","hans@hans.org","9100000011",3),
-							   	new Member (1002,"Feynman","feynman@feynman.org","9100000012",3),
+							{ 	new Member(1001,"Hans","hans@hans.org","9100000011",5),
+							   	new Member (1002,"Feynman","feynman@feynman.org","9100000012",5),
 								new Member (1003,"Teller","teller@teller.org" ,"9100000013",5),
 								new Member (1004,"Ernest","Ernest@Ernest.org" ,"9100000014",5),
 								new Member (1005,"john","john@john.org" ,"9100000015",5),
