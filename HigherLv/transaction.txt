@@ -1,0 +1,4 @@
+2024/07/11 10:37:18 : Book : 111 Black hole is already issued to 1001 Hans
+2024/07/11 10:43:39 : The book with book id java is not issued
+2024/07/11 10:44:54 : The Book : Black hole is returned by : Hans
+2024/07/11 10:45:25 : Book :Black hole is successfully issued to john
